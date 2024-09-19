@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - PLMUN Library</title>
+    <link rel="icon" type="image/x-icon" href="plmun.ico">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <div class="form-wrapper">
+        <div class="form-container">
+            <!-- School Logo at the Top -->
+            <img src="plmun.png" alt="PLMUN Logo" class="logo">
+            <p class="school-name">Pamantasan ng Lungsod ng Muntinlupa - Library Management System</p>
+
+            <h2>Sign Up</h2>
+
+            <form id="signup-form" class="form" action="signup.php" method="post" onsubmit="return validateForm()">
+                <div class="input-container">
+                    <i class="fas fa-user"></i>
+                    <input type="text" name="first_name" id="first_name" placeholder="First Name" required>
+                </div>
+
+                <div class="input-container">
+                    <i class="fas fa-user"></i>
+                    <input type="text" name="last_name" id="last_name" placeholder="Last Name" required>
+                </div>
+
+                <div class="input-container">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" name="institutional_email" id="institutional_email" placeholder="example@plmun.edu.ph" required>
+                </div>
+
+                <div class="input-container">
+                    <i class="fas fa-user"></i>
+                    <input type="text" name="new_username" id="new_username" placeholder="Username" required>
+                </div>
+
+                <div class="input-container">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" name="new_password" id="password" placeholder="Password" required>
+                    <div id="caps-lock-warning-password" class="caps-lock-warning">
+                        Caps Lock is on!
+                    </div>
+                </div>
+                
+                <div class="input-container">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm Password" required>
+                    
+                </div>
+                
+
+                <button type="submit">Sign Up</button>
+
+                <p>Already have an account? <a href="login.php">Login here</a></p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Basic form validation
+        function validateForm() {
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirm_password").value;
+            const email = document.getElementById("institutional_email").value;
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@plmun.edu.ph$/;
+
+            if (!emailPattern.test(email)) {
+                alert("Please enter a valid PLMUN institutional email address.");
+                return false;
+            }
+
+            if (password.length < 8 || !/\d/.test(password) || !/[a-zA-Z]/.test(password)) {
+                alert("Password must be at least 8 characters long and contain both letters and numbers.");
+                return false;
+            }
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match.");
+                return false;
+            }
+
+            return true;
+        }
+// capslock detection
+document.addEventListener('DOMContentLoaded', function () {
+    const passwordField = document.getElementById('password');
+    const confirmPasswordField = document.getElementById('confirm_password');
+    const capsLockWarningPassword = document.getElementById('caps-lock-warning-password');
+    const capsLockWarningConfirm = document.getElementById('caps-lock-warning-confirm');
+
+    function checkCapsLock(event) {
+        const isCapsLock = event.getModifierState && event.getModifierState('CapsLock');
+        if (isCapsLock) {
+            capsLockWarningPassword.style.display = 'block';
+            capsLockWarningConfirm.style.display = 'block';
+        } else {
+            capsLockWarningPassword.style.display = 'none';
+            capsLockWarningConfirm.style.display = 'none';
+        }
+    }
+
+    // Attach event listener to both password fields
+    passwordField.addEventListener('keydown', checkCapsLock);
+    passwordField.addEventListener('keyup', checkCapsLock);
+    confirmPasswordField.addEventListener('keydown', checkCapsLock);
+    confirmPasswordField.addEventListener('keyup', checkCapsLock);
+
+    // Ensure the warning is hidden when the page loads
+    capsLockWarningPassword.style.display = 'none';
+    capsLockWarningConfirm.style.display = 'none';
+});
+
+
+    </script>
+</body>
+</html>
